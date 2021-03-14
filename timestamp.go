@@ -87,6 +87,18 @@ func (ts TS) Time() time.Time {
 	return tZero.Add(ts.Duration())
 }
 
+// In returns the time stamp converted to time in the specified location.
+// See also Time() and time.In(loc).
+func (ts TS) In(loc *time.Location) time.Time {
+	return ts.Time().In(loc)
+}
+
+// Location returns the time zone information associated to the timestamp.
+// It will always return UTC, since timestamps use only UTC.
+func (ts TS) Location() *time.Location {
+	return time.UTC
+}
+
 // Add returns the time stamp corresponding to ts+d.
 func (ts TS) Add(d time.Duration) TS {
 	return ts + TS(d)
@@ -197,6 +209,8 @@ func (ts TS) UnixNano() int64 {
 
 // Sting returns the default string representation for the timestamp.
 // (see time.String for more details)
+// Since timestamps do not store a timezone, the string representation will
+// always use UTC.
 func (ts TS) String() string {
 	return ts.Time().String()
 }

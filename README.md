@@ -20,3 +20,12 @@ The time stamp is kept in nanoseconds.
 
 * to check for out-of-range when converting from a time.Time value, one 
  has to compare both with timestamp.MinTS and timestamp.MaxTS
+
+* string representation uses always UTC (since timezones are not supported).
+To use a different representation one has to go through time.Time, for
+ example via timestamp.In:
+
+  ```
+   ts := timestamp.Now()
+   fmt.Printf("ts UTC: %s , local: %s\n", ts, ts.In(time.Local))
+  ```

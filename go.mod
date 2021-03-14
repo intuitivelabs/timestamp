@@ -1,3 +1,3 @@
-module andrei/timestamp
+module github.com/intuitivelabs/timestamp
 
 go 1.15

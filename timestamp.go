@@ -9,6 +9,7 @@
 package timestamp
 
 import (
+	"sync/atomic"
 	"time"
 )
 
@@ -69,6 +70,16 @@ func Now() TS {
 // See time.Unix for more details.
 func Unix(sec int64, nsec int64) TS {
 	return Timestamp(time.Unix(sec, nsec))
+}
+
+// AtomicStore changes atomically ts value.
+func AtomicStore(ts *TS, v TS) {
+	atomic.StoreInt64((*int64)(ts), int64(v))
+}
+
+// AtomicLoad reads atomically the ts value.
+func AtomicLoad(ts *TS) TS {
+	return TS(atomic.LoadInt64((*int64)(ts)))
 }
 
 // Duration returns the time stamp converted to duration.

@@ -82,6 +82,17 @@ func AtomicLoad(ts *TS) TS {
 	return TS(atomic.LoadInt64((*int64)(ts)))
 }
 
+// AtomicSwap stores atomically a new TS value and returns the previous one.
+func AtomicSwap(ts *TS, v TS) TS {
+	return TS(atomic.SwapInt64((*int64)(ts), int64(v)))
+}
+
+// AtomicCompareAndSwap stores atomically newv if the current value
+// is oldv. It returns true on success (values swapped).
+func AtomicCompareAndSwap(ts *TS, oldv TS, newv TS) bool {
+	return atomic.CompareAndSwapInt64((*int64)(ts), int64(oldv), int64(newv))
+}
+
 // Duration returns the time stamp converted to duration.
 func (ts TS) Duration() time.Duration {
 	return time.Duration(ts)
